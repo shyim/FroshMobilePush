@@ -39,13 +39,13 @@ In more detail:
 
 ```
 Shopware shop ──(app registration handshake)──▶ Gateway (stores shop credentials securely)
-Phone app     ──(registers its push token)────▶ shop, then tells the gateway
+Phone app     ──(registers its push token)────▶ shop
 Shopware shop ──(checkout.order.placed)───────▶ Gateway
 Gateway       ──(FCM push, one per device)────▶ all phones signed in to that shop
 ```
 
 Push tokens are cached so the order path stays fast — when an order comes in, the gateway pushes
-straight from its cache without querying your shop first.
+straight from its cache, refreshing it from your shop at most once every 5 minutes.
 
 Live at `https://push-mobile.fos.gg`.
 
@@ -67,8 +67,9 @@ The rest of this document is for **developers** working on the gateway itself.
   push token.
 
 Shop credentials and cached OAuth tokens live in the `SHOP_STORAGE` KV namespace; device push
-tokens are cached per shop in KV (`fcn_tokens_{shopId}`, refreshed on demand with a 15-minute
-backstop). Tokens FCM reports as unregistered are removed from both the shop and the cache.
+tokens are cached per shop in KV (`fcn_tokens_{shopId}`) and refreshed from the shop on the order
+path with a 5-minute TTL backstop. Tokens FCM reports as unregistered are removed from both the
+shop and the cache.
 
 > **Note:** the gateway requires `@shopware-ag/app-server-sdk` >= 2.0.2. Earlier versions lost a
 > security flag when persisting shops to KV, which weakened re-registration validation
@@ -76,16 +77,14 @@ backstop). Tokens FCM reports as unregistered are removed from both the shop and
 
 > **Why there's no `ce_fcn.written` webhook:** Shopware only allows webhooks on a fixed set of
 > "hookable" entities (product, order, customer, …). App custom entities like `ce_fcn` are
-> rejected at install, so the phone app pings the gateway directly after registering its token.
+> rejected at install, so the gateway re-reads the device tokens itself on the order path
+> (cached for 5 minutes).
 
 ## App ↔ gateway contract
 
 1. **Register a device** — `POST /api/ce-fcn` against the shop's Admin API with
    `{"token": "<fcm registration token>", "deviceName": "Pixel 9"}` (upsert with a stable id per
-   install; ACL key `ce_fcn`).
-2. **Notify the gateway** — `POST https://push-mobile.fos.gg/sync/{shopId}`, where `shopId` comes
-   from `GET /api/_action/system-config?domain=core.app` → `core.app.shopId.value`. Without this,
-   a new device starts receiving pushes within 15 minutes anyway.
-3. **Receive the push** — the FCM `notification` carries `New order #1001 / <customer> • <amount>`;
+   install; ACL key `ce_fcn`). A newly registered device starts receiving pushes within 5 minutes.
+2. **Receive the push** — the FCM `notification` carries `New order #1001 / <customer> • <amount>`;
    the `data` payload carries `event=order.placed`, `shopId`, `shopUrl`, `orderId`, `orderNumber`
    (all strings) for deep-linking into the order detail screen.
