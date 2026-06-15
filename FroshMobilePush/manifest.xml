@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/trunk/src/Core/Framework/App/Manifest/Schema/manifest-3.0.xsd">
+    <meta>
+        <name>FroshMobilePush</name>
+        <label>Shopware Shop Manager Push Gateway</label>
+        <label lang="de-DE">Shopware Shop Manager Push-Gateway</label>
+        <description>Sends an instant push notification to the Shopware Shop Manager Android app whenever a customer places an order, so shop owners are notified in real time about new orders.</description>
+        <description lang="de-DE">Sendet eine sofortige Push-Benachrichtigung an die Shopware-Shop-Manager-Android-App, sobald ein Kunde bestellt, damit Shopbetreiber in Echtzeit über neue Bestellungen Bescheid wissen.</description>
+        <author>FriendsOfShopware</author>
+        <copyright>(c) FriendsOfShopware</copyright>
+        <version>1.0.0</version>
+        <license>MIT</license>
+        <icon>Resources/config/plugin.png</icon>
+    </meta>
+    <setup>
+        <registrationUrl>https://push-mobile.fos.gg/app/register</registrationUrl>
+    </setup>
+    <permissions>
+        <read>order</read>
+        <read>order_customer</read>
+        <read>currency</read>
+        <read>ce_fcn</read>
+        <delete>ce_fcn</delete>
+    </permissions>
+    <webhooks>
+        <webhook name="orderPlaced" url="https://push-mobile.fos.gg/app/webhook/order-placed" event="checkout.order.placed"/>
+        <webhook name="appActivated" url="https://push-mobile.fos.gg/app/activate" event="app.activated"/>
+        <webhook name="appDeactivated" url="https://push-mobile.fos.gg/app/deactivate" event="app.deactivated"/>
+        <webhook name="appDeleted" url="https://push-mobile.fos.gg/app/delete" event="app.deleted"/>
+    </webhooks>
+</manifest>

@@ -1,0 +1,109 @@
+compatibility_date: "2026-02-11"
+store:
+    availabilities:
+        - International
+    default_locale: en_GB
+    localizations:
+        - en_GB
+        - de_DE
+    categories:
+        - Administration
+    type: extension
+    icon: Resources/config/plugin.png
+    images:
+        - file: src/Resources/store/images/03-orders.png
+          priority: 1
+          preview:
+              de: true
+              en: true
+          activate:
+              de: true
+              en: true
+        - file: src/Resources/store/images/04-order-detail.png
+          priority: 2
+          preview:
+              de: false
+              en: false
+          activate:
+              de: true
+              en: true
+        - file: src/Resources/store/images/01-dashboard.png
+          priority: 3
+          preview:
+              de: false
+              en: false
+          activate:
+              de: true
+              en: true
+    automatic_bugfix_version_compatibility: true
+    meta_title:
+        de: "Shop Manager Push-Gateway – Bestellalarm"
+        en: "Shop Manager Push Gateway – Order alerts"
+    meta_description:
+        de: "Erhalten Sie für jede neue Shopware-Bestellung sofort eine Push-Benachrichtigung auf Ihrem Smartphone in der Shopware Shop Manager Android-App und verpassen Sie keinen Verkauf mehr."
+        en: "Get an instant push notification for every new Shopware order, right on your phone in the Shopware Shop Manager Android app, so you never miss a sale while away from the back office."
+    description:
+        de: file:src/Resources/store/description.de.md
+        en: file:src/Resources/store/description.en.md
+    installation_manual:
+        de: file:src/Resources/store/installation_manual.de.md
+        en: file:src/Resources/store/installation_manual.en.md
+    tags:
+        de:
+            - Push-Benachrichtigung
+            - Bestellungen
+            - Mobile App
+            - Android
+            - Benachrichtigung
+        en:
+            - push notification
+            - orders
+            - mobile app
+            - android
+            - notification
+    videos:
+        de: []
+        en: []
+    highlights:
+        de:
+            - Sofortige Push-Benachrichtigung bei jeder neuen Bestellung
+            - Bestellnummer, Kundenname und Bestellwert auf einen Blick
+            - Tippen öffnet direkt die Bestelldetails in der App
+            - Mehrere Geräte für das gesamte Team
+        en:
+            - Instant push notification for every new order
+            - Order number, customer name and total at a glance
+            - Tap to open the order detail directly in the app
+            - Multiple devices for the whole team
+    features:
+        de:
+            - Bestellbenachrichtigungen in Echtzeit
+            - Unterstützung mehrerer Geräte pro Shop
+            - Sichere Verbindung über das Shopware App-System
+            - Keine Speicherung von Bestellhistorie oder Kundendatenbank
+        en:
+            - Real-time order notifications
+            - Multi-device support per shop
+            - Secure connection via the Shopware app system
+            - No order history or customer database stored
+    faq:
+        de:
+            - question: Benötige ich die Shopware Shop Manager App?
+              answer: "Ja. Diese App liefert die Benachrichtigungen an die kostenlose Shopware Shop Manager Android-App, in der Sie bei Ihrem Shop angemeldet sein müssen."
+            - question: Werden Bestelldaten gespeichert?
+              answer: "Nein. Es werden nur die für die Benachrichtigung nötigen Informationen verarbeitet und an Ihre Geräte weitergeleitet."
+        en:
+            - question: Do I need the Shopware Shop Manager app?
+              answer: "Yes. This app delivers the notifications to the free Shopware Shop Manager Android app, where you need to be signed in to your shop."
+            - question: Is order data stored?
+              answer: "No. Only the information needed for the notification is processed and relayed to your devices."
+build:
+    zip:
+        composer:
+            enabled: true
+        assets:
+            enabled: true
+            enable_es_build_for_admin: false
+            enable_es_build_for_storefront: false
+            disable_sass: false
+            npm_strict: false

@@ -1,0 +1,9 @@
+# Copy to .dev.vars for `wrangler dev`; set the same value as a worker secret
+# for production: wrangler secret put FCM_SERVICE_ACCOUNT
+#
+# SHOPWARE_APP_SECRET is NOT here — it's a plain var in wrangler.jsonc (the app
+# is not published to the Shopware store, so the setup secret is hard-coded).
+
+# Firebase service account JSON on a single line
+# (Firebase console → Project settings → Service accounts → Generate new private key)
+FCM_SERVICE_ACCOUNT={"type":"service_account","project_id":"...","private_key":"-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n","client_email":"...","token_uri":"https://oauth2.googleapis.com/token"}

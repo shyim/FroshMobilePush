@@ -1,0 +1,18 @@
+{
+  "name": "frosh-mobile-push",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy --minify",
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings"
+  },
+  "dependencies": {
+    "@shopware-ag/app-server-sdk": "^2.0.2",
+    "hono": "^4.12.25"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.3",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.100.0"
+  }
+}
